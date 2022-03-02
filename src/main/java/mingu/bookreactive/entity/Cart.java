@@ -21,7 +21,6 @@ public class Cart {
         this.id = id;
         this.cartItems = cartItems;
     }
-    // end::code[]
 
     public String getId() {
         return id;

@@ -63,3 +63,36 @@ public class InitDatabase {
 * `ReactiveQueryByExampleExecutor` 사용법은 처음봄
 ---
 ### 3장 스프링 부트 개발자 도구
+* devTools 를 통한 liveReload 가 가능하지만 개인적으로 선호하지 않아 pass
+* `logging.level.web=DEBUG` property 설정은 유용한 듯.. 쓸곳을 찾아보자
+* `Hooks.onOperatorDebug(); ~~ Hooks.resetOnOperatorDebug();` 개발환경에서 사용 (운영은 그냥 `log()`)
+* `BlockHound` 매우 좋네? 의도하지 않은곳의 체크만 잘 처리하면.. (`allowBlockingCallsInside()`)
+---
+### 4장 스프링 부트 테스트
+* 각 클래스 우클릭 -> Go to -> Test 를 통한 스탠다드 방법으로 생성하도록 함
+* 머지 갑자기 코드 구조가 바뀜 InventoryService 가 언제 이렇게 ... ;;
+* `as(StepVerifier::create)`
+  * 리액티브 테스트 케이스는 처음이라 잘 익혀둬야겠음
+* 슬라이스 테스트에 사용되는 `@...Test`
+  * `@ExtendWith(SpringExtension.class)`를 포함하고 있음
+* `blockhound-junit-platform`
+  * gradle 에러가 발생하여 모든 테스트가 실패함. 다음에 찾아보는걸로...
+```java
+org.gradle.api.internal.tasks.testing.TestSuiteExecutionException: Could not complete execution for Gradle Test Executor 2.
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
+	at java.base@11/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+...
+Caused by: java.lang.NoClassDefFoundError: org/junit/platform/launcher/TestExecutionListener
+    at java.base/java.lang.ClassLoader.defineClass1(Native Method)
+    at java.base/java.lang.ClassLoader.defineClass(ClassLoader.java:1016)
+    at java.base/java.security.SecureClassLoader.defineClass(SecureClassLoader.java:174)
+    at java.base/jdk.internal.loader.BuiltinClassLoader.defineClass(BuiltinClassLoader.java:801)
+...
+Caused by: java.lang.ClassNotFoundException: org.junit.platform.launcher.TestExecutionListener
+    at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582)
+    at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:178)
+    at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:521)
+    ... 48 more
+```
+---
+### 5장 스프링 부트 운영
