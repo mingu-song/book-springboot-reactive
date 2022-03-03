@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.gorylenko.gradle-git-properties' version "2.4.0"
 }
 
 group = 'mingu'
@@ -17,6 +18,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
+    // actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     // dev tools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -30,4 +34,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+springBoot{
+    buildInfo()
 }
