@@ -185,9 +185,7 @@ logging.level.org.springframework.data=DEBUG
 logging.level.reactor=DEBUG
 logging.level.mingu.bookreactive=DEBUG
 ```
-* Application 실행은 에러가 발생하며 (Amqp 설정이 없음), 테스트만 실행 확인
 * 만약 로컬에 rabbitmq가 필요하다면 도커로 실행 및 property 설정
-  * 포트를 5672 로 하게 되면, 이번에는 테스트가 실패하게 되니 알아서 잘 해야 함
 ```yaml
 version: '3'
 services:
@@ -198,15 +196,13 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: "admin"
-      RABBITMQ_DEFAULT_PASS: "admin"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
 ```
 ```properties
 # ch8 rabbitmq
 spring.rabbitmq.host=localhost
 spring.rabbitmq.port=5672
-spring.rabbitmq.username=admin
-spring.rabbitmq.password=admin
 ```
 ---
 ## 8장 부터는 모듈 분리 진행
