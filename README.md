@@ -205,5 +205,7 @@ spring.rabbitmq.host=localhost
 spring.rabbitmq.port=5672
 ```
 ---
-## 8장 부터는 모듈 분리 진행
-* 경로 관련 항목을 모두 /ch1to7 추가 필요함
+## 8장 스프링 부트 R소켓
+* 8장 부터는 모듈 분리 (ch8server/ch8client)
+* `connectTcp` 가 Deprecated 에 따른 f/u
+  * `Mono<RSocketRequester>` 아닌 `RSocketRequester` 사용 
