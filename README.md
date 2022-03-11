@@ -209,3 +209,41 @@ spring.rabbitmq.port=5672
 * 8장 부터는 모듈 분리 (ch8server/ch8client)
 * `connectTcp` 가 Deprecated 에 따른 f/u
   * `Mono<RSocketRequester>` 아닌 `RSocketRequester` 사용 
+---
+## 9장 스프링 부트 어플리케이션 보안
+* ch9 모듈 작성
+### 스프링 시큐리티 시작하기
+### 실무 적용
+* 제목과는 다르게 실무에 사용하지 않는 방식으로 진행
+* `User.withDefaultPasswordEncoder()` 은 사용하지 않음
+### 스프링 시큐리티 커스텀 정책
+* `SecurityConfig` 에 필터체인 사용
+* 몽고디비를 메모리를 사용하지 않기에 `ReactiveMongoOperations.remove()` 로 정리함
+### 사용자 컨텍스트 접근
+* `Authentication` 객체를 주입받아 사용
+### 메소드 수준 보안
+* Spring HATEOAS 를 사용하지 않고, `HomeController.createItem()` 메소드에 `@PreAuthorize` 적용
+* 테스트 성공을 위해서는 어노테이션과 주석처리 필요
+```java
+@Configuration
+@EnableReactiveMethodSecurity // 메소드 수준 보안 테스트
+public class SecurityConfig {
+  ... 
+  @Bean
+  public SecurityWebFilterChain customSecurityPolicy(ServerHttpSecurity http) {
+      return http
+              .authorizeExchange(exchanges -> exchanges
+//                      .pathMatchers(HttpMethod.POST, "/").hasRole(INVENTORY)
+//                      .pathMatchers(HttpMethod.DELETE, "/**").hasRole(INVENTORY) 
+                      .anyExchange().authenticated()
+                      .and()
+                      .httpBasic()
+                      .and()
+                      .formLogin())
+              .csrf().disable()
+              .build();
+  }
+  ...
+}
+```
+### OAuth 보안
