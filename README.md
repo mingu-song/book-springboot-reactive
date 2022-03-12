@@ -247,3 +247,30 @@ public class SecurityConfig {
 }
 ```
 ### OAuth 보안
+* 심플하게 home 화면에 oauth 정보만 보여주도록 구성 (ch9oauth 모듈)
+* `application.yml` : oauth2 정보는 환경변수를 이요하여 등록
+```yaml
+server:
+  port: 9000
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
+```
+* `build.gradle` : 의존관계는 starter-oauth2-client 하나를 사용해도 되고, security-* 3개를 사용해도 됨
+```groovy
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.security:spring-security-config'
+    implementation 'org.springframework.security:spring-security-oauth2-client'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+```
+---
+## 마무리
+* reactive 를 조금 더 쉽게 접근할 수 있었고, R소켓과도 자연스럽게 연결되는 부분이 좋았음
+* 알지 못했던 테스트 라이브러리 및 기본을 확인 할 수 있었음
+* 대단한 깊이를 다루진 않아 실무에 그대로 적용하기는 무리가 있으나, 조금만 응용하면 가능하다고 생각됨

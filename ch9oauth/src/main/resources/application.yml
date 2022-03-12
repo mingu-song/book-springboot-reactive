@@ -1,0 +1,16 @@
+server:
+  port: 9000
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${CLIENT_ID}
+            clientSecret: ${CLIENT_SECRET}
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: true
+
